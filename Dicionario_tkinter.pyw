@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import ttk
+import tkinter.messagebox
 import Janela_adicionar
 from Dados_SQLite import Manipulacao_SQLite
 from Janela_adicionar import Janela_Auxiliar
 from Dados_Constantes import *
 import Reproduzir_audio
+from Funcao_auxiliar import Strings
 
 class Dicionario():
     def __init__(self, janela_principal):
@@ -31,10 +33,12 @@ class Dicionario():
         #Criação do frame
         self.fr_superior = ttk.Frame(self.janela_principal, width = 600, height = 30, style = "cor_frame.TFrame")
         self.fr_superior.place(x = 3, y = 5)
+        #Imagens
+        self.icone_informacao = PhotoImage(file = r"Imagens\Icone_informacao.png")
+        self.icone_imprimir = PhotoImage(file = r"Imagens\Icone_imprimir.png")
         #Widgets empacotados no frame no superior, imprimir, sobre o software, sair do programa
-        self.imprimir = ttk.Button(self.fr_superior, text = "impr").place(x = 20, y = 2)
-        self.sobre = ttk.Button(self.fr_superior, text = "sobre").place(x = 100, y = 2)
-        self.sair = ttk.Button(self.fr_superior, text = "sair").place(x = 180, y = 2)
+        self.imprimir = ttk.Button(self.fr_superior, image = self.icone_imprimir).place(x = 20, y = 2)
+        self.sobre = ttk.Button(self.fr_superior, image = self.icone_informacao, command = self.informacao).place(x = 60, y = 2)
 
     def frame_pesquisa_insercao(self):
         """Metodo que trata da inserção e pesquisa de palavras"""
@@ -85,6 +89,9 @@ class Dicionario():
         self.lb_palavra = ttk.Label(self.fr_descricao, text = "", background =  "#BC8F8F", font = ("Calibri", 20, "bold"))
         self.lb_palavra.place(x = 46, y = 9)
 
+        self.lb_tamanho = ttk.Label(self.fr_descricao, text = "", background =  "#BC8F8F")
+        self.lb_tamanho.place(x = 380, y = 330)
+
     def imagens(self):
         """Metodo que cuida da apresentação das imagens na janela"""
         self.imagem_referencial = PhotoImage(file = r"Imagens\Icone_referencial.png")
@@ -102,20 +109,26 @@ class Dicionario():
 
     def visualizar_palavra(self, e):
         try:
+            self.icone_som = PhotoImage(file = r"Imagens\Icone_som.png")
             item = self.treedataview_palavra.selection()[0]
             id = self.treedataview_palavra.item(item)['values'][0]
             objecto_gerado = Manipulacao_SQLite()
             objecto_gerado.selecionar_palavras()
             significado = objecto_gerado.dict_palavrasign[id]
             self.lb_palavra["text"] = id
-            self.ouvir = ttk.Button(self.fr_descricao, text = "ouvir")
-            self.ouvir.place(x = 5, y = 70)
+            self.ouvir = ttk.Button(self.fr_descricao, image = self.icone_som)
+            self.ouvir.place(x = 10, y = 50)
             self.ouvir["command"] = self.reproduzir_audio
             descricaotxt = Text(self.fr_descricao, width = 65, height = 15, wrap = "word", font = ("Calibri", 11, "bold"), relief = SOLID)
             descricaotxt.place(x = 46, y = 50)
 
             descricaotxt.insert(1.0, "\n     "+significado)
             descricaotxt.config(state = "disabled")
+
+            objecto_string = Strings()
+            objecto_string.comprimento_vogais(self.lb_palavra["text"])
+            self.lb_tamanho["text"] = objecto_string.descricao
+
         except:
             pass
 
@@ -126,9 +139,14 @@ class Dicionario():
             self.bt_ad.config(state = desabilidado)
 
     def reproduzir_audio(self):
-        audio = r"Audio\Amar.wav"
-        Reproduzir_audio.reproducao_audio(audio)
-        #self.lb_palavra["text"]
+        try:
+            audio = "Audio\\"+self.lb_palavra["text"]+".wav"
+            Reproduzir_audio.reproducao_audio(audio)
+        except:
+            pass
+
+    def informacao(self):
+        tkinter.messagebox._show("PyMemory v.1", "Desenvolvedor: Adriano António\n"+r"Email: adriano.antonio@outlook.pt ou facebook.com\adriano5000"+"\nContacto: +244-922-961-983\n"+r"Git: github.com\adrianoantonio96", "info")
 
 
 
@@ -139,6 +157,7 @@ class Dicionario():
             
 dicionario_lembrete = Tk()
 dicionario_lembrete.title("Dicionário de lembretes")
+dicionario_lembrete.iconbitmap(r"Imagens/icone_principal.ico")
 dicionario_lembrete.geometry("890x700+100+10")
 dicionario_lembrete["bg"] = "white"
 dicionario_instancia = Dicionario(dicionario_lembrete)
