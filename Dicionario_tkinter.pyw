@@ -37,7 +37,7 @@ class Dicionario():
         self.icone_informacao = PhotoImage(file = r"Imagens\Icone_informacao.png")
         self.icone_imprimir = PhotoImage(file = r"Imagens\Icone_imprimir.png")
         #Widgets empacotados no frame no superior, imprimir, sobre o software, sair do programa
-        self.imprimir = ttk.Button(self.fr_superior, image = self.icone_imprimir).place(x = 20, y = 2)
+        self.imprimir = ttk.Button(self.fr_superior, image = self.icone_imprimir, state = desabilidado).place(x = 20, y = 2)
         self.sobre = ttk.Button(self.fr_superior, image = self.icone_informacao, command = self.informacao).place(x = 60, y = 2)
 
     def frame_pesquisa_insercao(self):

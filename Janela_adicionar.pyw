@@ -10,6 +10,7 @@ class Janela_Auxiliar(object):
         self.janela_adicionar = janela_adicionar
         self.janela_adicionar.geometry("340x320")
         self.janela_adicionar.title("Adicionar palavra")
+        self.janela_adicionar.iconbitmap(r"Imagens/icone_principal.ico")
         self.janela_adicionar["bg"] = castanho
         self.palavra = palavra
 
