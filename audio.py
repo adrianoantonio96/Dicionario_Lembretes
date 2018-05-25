@@ -3,10 +3,10 @@ import wave
 import matplotlib.pyplot as plt
 import numpy as np
 import struct
+import sys
 
 
 def main(args):
-    
 
     chunk = 1024
     formato = pyaudio.paInt16
@@ -75,6 +75,4 @@ def main(args):
     
     return 0
 
-if __name__ == '__main__':
-    import sys
-    sys.exit(main(sys.argv))
+main(sys.argv)
