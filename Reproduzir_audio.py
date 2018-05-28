@@ -1,8 +1,9 @@
 import pyaudio
 import wave
 def reproducao_audio(audio):
+    """Metodo de reprodução do aúdio"""
     chunk = 1024
-    wf = wave.open(audio, 'rb')
+    wf = wave.open(audio, 'rb') #Abertura
     p = pyaudio.PyAudio()
 
     stream = p.open(

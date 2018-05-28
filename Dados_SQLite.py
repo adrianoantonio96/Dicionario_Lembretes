@@ -13,10 +13,11 @@ class Manipulacao_SQLite(object):
             pass
 
     def inserir_mesa(self, palavra, significado):
-            self.conectado.execute("""INSERT INTO Palavras(
-            Palavra,
-            Significado) VALUES (?, ?)""", (palavra, significado))
-            self.conectar.commit()
+        """Inserção de palavra e significado nodatabase"""
+        self.conectado.execute("""INSERT INTO Palavras(
+        Palavra,
+        Significado) VALUES (?, ?)""", (palavra, significado))
+        self.conectar.commit()
 
     def selecionar_palavras(self):
         """Metodo que seleciona todas as palavras e significados e coloca-os numa lista e dicionário"""
@@ -26,12 +27,3 @@ class Manipulacao_SQLite(object):
         for item in self.conectado.execute(termo_pesquisa, ):
             self.lt_palavras.append(item[0])
             self.dict_palavrasign[item[0]] = item[1]
-
-        #print(list(self.dict_palavrasign))
-
-
-            #self.lt_palavras.append(list(item))
-        #print(self.lt_palavras)
-
-objecto = Manipulacao_SQLite()
-objecto.selecionar_palavras()
