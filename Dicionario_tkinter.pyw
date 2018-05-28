@@ -1,3 +1,6 @@
+#Autor - Adriano António (Desenvolvedor python e artofpro center)
+#Desenvolvido - 2018 - Email: adriano.antonio@outook.pt
+#Titulo - Dicionário de lembretes, um principio de pymemory
 from tkinter import *
 from tkinter import ttk
 import tkinter.messagebox
